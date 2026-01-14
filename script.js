@@ -261,7 +261,6 @@ function createFloatingElements() {
 function setNextBirthday() {
     const now = new Date();
     if (targetBirthday < now) {
-        celebrationTriggered = false; // Reset flag for next year
         targetBirthday = new Date(now.getFullYear() + 1, targetBirthday.getMonth(), targetBirthday.getDate(), 0, 0, 0);
     }
 }
@@ -644,18 +643,8 @@ function startBottomFireworks() {
 
 // Transition to dashboard
 function transitionToDashboard() {
-    console.log('📊 Transitioning to dashboard...');
-    
-    // Hide celebration and countdown
-    const celebSection = document.getElementById('celebrationSection');
-    const countdownSection = document.getElementById('countdownSection');
-    const dashboardSection = document.getElementById('dashboardSection');
-    
-    if (celebSection) celebSection.style.display = 'none';
-    if (countdownSection) countdownSection.style.display = 'none';
-    if (dashboardSection) dashboardSection.style.display = 'flex';
-    
-    console.log('✅ Dashboard shown');
+    document.getElementById('celebrationSection').style.display = 'none';
+    document.getElementById('dashboardSection').style.display = 'flex';
     initializeDashboard();
 }
 
