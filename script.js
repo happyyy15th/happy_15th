@@ -288,10 +288,13 @@ function updateCountdown() {
     
     if (timeRemaining <= 0) {
         // Birthday time reached!
-        document.getElementById('countdownSection').style.display = 'none';
-        document.getElementById('lovelyPopup').style.display = 'none';
-        document.getElementById('celebrationSection').style.display = 'flex';
-        triggerCelebration();
+        if (!celebrationTriggered) {
+            celebrationTriggered = true;
+            document.getElementById('countdownSection').style.display = 'none';
+            document.getElementById('lovelyPopup').style.display = 'none';
+            document.getElementById('celebrationSection').style.display = 'flex';
+            triggerCelebration();
+        }
         return;
     }
     
@@ -736,6 +739,15 @@ document.addEventListener('DOMContentLoaded', function() {
             createBurst(touch.clientX, touch.clientY, 3, 'sparkle');
         }, { passive: true });
     }
+
+    // Start splash animation after celebration begins
+    const originalDisplay = document.getElementById('celebrationSection').style.display;
+    const checkCelebration = setInterval(() => {
+        if (document.getElementById('celebrationSection').style.display !== 'none') {
+            startSplashAnimation();
+            clearInterval(checkCelebration);
+        }
+    }, 100);
 });
 
 // ==================== PUBLIC API ====================
@@ -757,39 +769,7 @@ document.addEventListener('touchstart', function(event) {
     if (popup && popup.style.display === 'flex' && event.target === popup) {
         closePopup();
     }
-}, { passive: true });// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    createStars();
-    setNextBirthday();
-    
-    // Update countdown immediately
-    updateCountdown();
-    
-    // Update every second
-    setInterval(updateCountdown, 1000);
-    
-    // Start splash animation after celebration begins
-    const originalDisplay = document.getElementById('celebrationSection').style.display;
-    const checkCelebration = setInterval(() => {
-        if (document.getElementById('celebrationSection').style.display !== 'none') {
-            startSplashAnimation();
-            clearInterval(checkCelebration);
-        }
-    }, 100);
-});
-
-// Allow customization
-function setBirthdayDate(year, month, day, hour = 0, minute = 0, second = 0) {
-    targetBirthday = new Date(year, month - 1, day, hour, minute, second);
-}
-
-// Close popup when clicking outside
-document.addEventListener('click', function(event) {
-    const popup = document.getElementById('lovelyPopup');
-    if (popup.style.display === 'flex' && event.target === popup) {
-        closePopup();
-    }
-});
+}, { passive: true });
 
 // ==================== DASHBOARD FUNCTIONALITY ====================
 function initializeDashboard() {
