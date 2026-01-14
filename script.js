@@ -514,10 +514,6 @@ function triggerCelebration() {
     // Create falling balloons first
     createBalloons();
     
-    // Start fireworks from bottom (New Year's Eve style)
-    console.log('🎇 Calling startBottomFireworks()...');
-    startBottomFireworks();
-    
     // Continuous celebration animations
     startRosePetalAnimation();
     startCelebrationAnimation();
@@ -528,10 +524,10 @@ function triggerCelebration() {
     // Start countdown timer for celebration page
     startCelebrationCountdown();
     
-    // Auto-transition to dashboard after 20 seconds
+    // Auto-transition to dashboard after 5 seconds
     setTimeout(() => {
         transitionToDashboard();
-    }, 20000);
+    }, 5000);
 }
 
 // REAL FIREWORKS - Like New Year's Eve
@@ -835,7 +831,7 @@ document.addEventListener('touchstart', function(event) {
 let celebrationCountdownInterval = null;
 
 function startCelebrationCountdown() {
-    let remainingSeconds = 20;
+    let remainingSeconds = 5;
     const countdownElement = document.getElementById('celebrationCountdown');
     
     // Display initial value
