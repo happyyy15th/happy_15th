@@ -691,8 +691,24 @@ function startCelebrationAnimation() {
     }, isMobile ? 400 : 200);
 }
 
+// Splash animation - starts when celebration begins
+function startSplashAnimation() {
+    // Optional visual effect on celebration start
+    console.log('🌊 Splash animation started');
+    setupInteractiveFireworks();
+}
+
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
+    // Ensure all critical elements exist before proceeding
+    const criticalElements = ['countdownSection', 'celebrationSection', 'dashboardSection', 'imageLightbox'];
+    const missingElements = criticalElements.filter(id => !document.getElementById(id));
+    
+    if (missingElements.length > 0) {
+        console.error('❌ Missing critical HTML elements:', missingElements);
+        return;
+    }
+    
     // Mobile optimizations
     if (isMobile) {
         // Prevent double-tap zoom
@@ -776,14 +792,18 @@ function initializeDashboard() {
     const navButtons = document.querySelectorAll('.nav-btn');
     
     navButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        // Handle both click and touch
+        const handlePageChange = function() {
             const pageName = this.getAttribute('data-page');
             showDashboardPage(pageName);
             
             // Update active button
             navButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
-        });
+        };
+        
+        button.addEventListener('click', handlePageChange);
+        button.addEventListener('touchend', handlePageChange);
     });
 }
 
@@ -796,19 +816,6 @@ function showDashboardPage(pageName) {
         selectedPage.style.display = 'block';
     }
 }
-
-// Touch support for dashboard
-document.addEventListener('touchstart', function(event) {
-    if (event.target.classList.contains('nav-btn')) {
-        const pageName = event.target.getAttribute('data-page');
-        showDashboardPage(pageName);
-        
-        // Update active button
-        const navButtons = document.querySelectorAll('.nav-btn');
-        navButtons.forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-    }
-}, { passive: true });
 
 // ==================== CELEBRATION COUNTDOWN TIMER ====================
 let celebrationCountdownInterval = null;
@@ -921,6 +928,3 @@ function setupInteractiveFireworks() {
         }
     }, { passive: true });
 }
-
-// Initialize interactive fireworks when page loads
-document.addEventListener('DOMContentLoaded', setupInteractiveFireworks);
