@@ -4,6 +4,9 @@
 let targetBirthday = new Date(new Date().getTime() + 60 * 1000); // 1 minute from now for testing
 // For production, change to: new Date(2026, 0, 15, 0, 0, 0); // January 15, 2026, 12:00 AM
 
+// Flag to prevent triggering celebration multiple times
+let celebrationTriggered = false;
+
 // Detect device type for performance optimization
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 const isTablet = /iPad|Android(?!.*Mobile)/.test(navigator.userAgent);
@@ -258,6 +261,7 @@ function createFloatingElements() {
 function setNextBirthday() {
     const now = new Date();
     if (targetBirthday < now) {
+        celebrationTriggered = false; // Reset flag for next year
         targetBirthday = new Date(now.getFullYear() + 1, targetBirthday.getMonth(), targetBirthday.getDate(), 0, 0, 0);
     }
 }
@@ -285,10 +289,13 @@ function updateCountdown() {
     
     if (timeRemaining <= 0) {
         // Birthday time reached!
-        document.getElementById('countdownSection').style.display = 'none';
-        document.getElementById('lovelyPopup').style.display = 'none';
-        document.getElementById('celebrationSection').style.display = 'flex';
-        triggerCelebration();
+        if (!celebrationTriggered) {
+            celebrationTriggered = true;
+            document.getElementById('countdownSection').style.display = 'none';
+            document.getElementById('lovelyPopup').style.display = 'none';
+            document.getElementById('celebrationSection').style.display = 'flex';
+            triggerCelebration();
+        }
         return;
     }
     
@@ -637,8 +644,18 @@ function startBottomFireworks() {
 
 // Transition to dashboard
 function transitionToDashboard() {
-    document.getElementById('celebrationSection').style.display = 'none';
-    document.getElementById('dashboardSection').style.display = 'flex';
+    console.log('📊 Transitioning to dashboard...');
+    
+    // Hide celebration and countdown
+    const celebSection = document.getElementById('celebrationSection');
+    const countdownSection = document.getElementById('countdownSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    
+    if (celebSection) celebSection.style.display = 'none';
+    if (countdownSection) countdownSection.style.display = 'none';
+    if (dashboardSection) dashboardSection.style.display = 'flex';
+    
+    console.log('✅ Dashboard shown');
     initializeDashboard();
 }
 
