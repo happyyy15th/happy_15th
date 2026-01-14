@@ -788,12 +788,45 @@ document.addEventListener('touchstart', function(event) {
 }, { passive: true });
 
 // ==================== DASHBOARD FUNCTIONALITY ====================
+
+// Play a pleasant button click sound
+function playButtonClickSound() {
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Create oscillator for a pleasant "ding" sound
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        // Connect nodes
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        // Set frequency for a pleasant tone (C note - 261.63 Hz, then higher E note)
+        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+        
+        // Control volume
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+        
+        // Play sound
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.15);
+    } catch (e) {
+        console.log('Audio context not available');
+    }
+}
+
 function initializeDashboard() {
     const navButtons = document.querySelectorAll('.nav-btn');
     
     navButtons.forEach(button => {
         // Handle both click and touch
         const handlePageChange = function() {
+            // Play click sound
+            playButtonClickSound();
+            
             const pageName = this.getAttribute('data-page');
             showDashboardPage(pageName);
             
