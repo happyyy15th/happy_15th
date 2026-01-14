@@ -1432,6 +1432,7 @@ input, button, select, textarea {
 /* Fix for iOS scroll behavior */
 body {
     -webkit-user-select: none;
+    user-select: none;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
 }
@@ -1686,7 +1687,7 @@ html {
 /* Pictures Gallery Styling */
 .pictures-gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     margin: 25px 0;
     padding: 20px;
@@ -1701,6 +1702,7 @@ html {
     box-shadow: 0 4px 15px rgba(255, 107, 157, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    aspect-ratio: 1;
 }
 
 .picture-item:hover {
@@ -1710,7 +1712,7 @@ html {
 
 .picture-item img {
     width: 100%;
-    height: 150px;
+    height: 100%;
     object-fit: cover;
     display: block;
 }
@@ -1807,6 +1809,31 @@ html {
 
     .page-content p {
         font-size: 0.95rem;
+    }
+
+    /* Mobile gallery - 2 columns */
+    .pictures-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .picture-item {
+        aspect-ratio: 1;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Tablet gallery - 3 columns */
+    .pictures-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    /* Desktop gallery - 4 columns */
+    .pictures-gallery {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
