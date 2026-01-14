@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Birthday Wish">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>Happy Birthday Wish</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Prevent layout shift on mobile */
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="stars"></div>
+    <div class="floating-elements" id="floatingElements"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    
+    <div class="container">
+        <!-- Countdown Section -->
+        <div class="countdown-section" id="countdownSection">
+            <div class="romantic-header">
+                <h1>Mine Afuuuuuu...... 💕</h1>
+                <p class="subtitle">Time until I celebrate you...</p>
+            </div>
+            
+            <div class="countdown-display">
+                <div class="countdown-item">
+                    <span class="countdown-value" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <span class="countdown-separator">:</span>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <span class="countdown-separator">:</span>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+            
+            <div class="message-box">
+                <p id="countdownMessage">Waiting for the perfect moment...</p>
+            </div>
+        </div>
+
+        <!-- Celebration Section (Hidden until midnight) -->
+        <div class="celebration-section" id="celebrationSection" style="display: none;">
+            <div class="celebration-background"></div>
+            <div class="balloons-container" id="balloonsContainer"></div>
+            <div class="fireworks-launcher" id="fireworksLauncher"></div>
+            
+            <div class="wishes-content">
+                <div class="birthday-text">
+                    <div class="rainbow-text">
+                        <span class="letter" style="color: #ff6b6b;">H</span>
+                        <span class="letter" style="color: #ffa94d;">A</span>
+                        <span class="letter" style="color: #ffd43b;">P</span>
+                        <span class="letter" style="color: #69db7c;">P</span>
+                        <span class="letter" style="color: #4d96ff;">Y</span>
+                    </div>
+                    <div class="rainbow-text">
+                        <span class="letter" style="color: #b197fc;">B</span>
+                        <span class="letter" style="color: #ff6b9d;">I</span>
+                        <span class="letter" style="color: #ff922b;">R</span>
+                        <span class="letter" style="color: #51cf66;">T</span>
+                        <span class="letter" style="color: #74c0fc;">H</span>
+                        <span class="letter" style="color: #ffa8d8;">D</span>
+                        <span class="letter" style="color: #a78bfa;">A</span>
+                        <span class="letter" style="color: #6bcf7f;">Y</span>
+                    </div>
+                    <div class="rainbow-text sub-text">
+                        <span class="letter" style="color: #ff8787;">t</span>
+                        <span class="letter" style="color: #90ee90;">o</span>
+                        <span class="letter" style="color: #87ceeb;">Y</span>
+                        <span class="letter" style="color: #dda0dd;">o</span>
+                        <span class="letter" style="color: #f0e68c;">u</span>
+                    </div>
+                </div>
+                
+                <div class="celebration-timer">
+                    <span id="celebrationCountdown">10</span> seconds
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section (Appears after celebration) -->
+        <div class="dashboard-section" id="dashboardSection" style="display: none;">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>Welcome to Your Special Day! 💝</h1>
+                </div>
+                
+                <div class="dashboard-nav">
+                    <button class="nav-btn active" data-page="gifts">
+                        <span class="nav-icon">🎁</span>
+                        <span class="nav-label">Gift</span>
+                    </button>
+                    <button class="nav-btn" data-page="memories">
+                        <span class="nav-icon">📸</span>
+                        <span class="nav-label">Memories</span>
+                    </button>
+                    <button class="nav-btn" data-page="notes">
+                        <span class="nav-icon">📝</span>
+                        <span class="nav-label">Notes</span>
+                    </button>
+                    <button class="nav-btn" data-page="pray">
+                        <span class="nav-icon">💝</span>
+                        <span class="nav-label">Best Wishes</span>
+                    </button>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="page-content" id="gifts-page" style="display: block;">
+                        <h2>🎁 Gift I Want to Give You</h2>
+
+                        
+                        <div class="video-gift">
+                            <h3>Ab ye kesy doon...!!!</h3>
+                            <div class="video-container">
+                                <video width="100%" height="auto" controls style="border-radius: 10px; max-width: 500px;">
+                                    <source src="gift-video.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="page-content" id="memories-page" style="display: none;">
+                        <h2>💬 Our Beautiful Memories</h2>
+                        
+                        <div class="video-gift">
+
+                            <div class="pictures-gallery">
+                                <div class="picture-item">
+                                    <img src="photo1.jpg.jpeg" alt="Memory 1">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo2.jpeg" alt="Memory 2">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo3.jpeg" alt="Memory 3">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo4.jpeg" alt="Memory 4">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo5.jpeg" alt="Memory 5">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo6.jpeg" alt="Memory 6">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo7.jpeg" alt="Memory 7">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo8.jpeg" alt="Memory 8">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo9.jpeg" alt="Memory 9">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo10.jpeg" alt="Memory 10">
+                                </div>
+                                <div class="picture-item">
+                                    <img src="photo11.jfif" alt="Memory 11">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="page-content" id="notes-page" style="display: none;">
+                        <h2>💌 Special Message</h2>
+                        
+                        <div class="video-gift">
+                            <div class="video-container">
+                                <video width="100%" height="auto" controls style="border-radius: 10px; max-width: 500px;">
+                                    <source src="memory-video.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="page-content" id="pray-page" style="display: none;">
+                        <h2> My Special Wish for You</h2>
+                        
+                        <div class="video-gift">
+                            <div class="video-container">
+                                <video width="100%" height="auto" controls style="border-radius: 10px; max-width: 500px;">
+                                    <source src="wish-video.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lovely Pop-up Message (for late night visits) -->
+    <div class="lovely-popup" id="lovelyPopup" style="display: none;">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">×</button>
+            <h2>Hey..., Beautiful! 💕</h2>
+            <p>It's almost midnight! The magic moment is about to arrive...</p>
+            <p>Get ready for a surprise! 🎊</p>
+            <div class="popup-timer" id="popupTimer">00:00</div>
+            <button class="popup-button" onclick="closePopup()">Let's Celebrate</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1900 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Canvas for Particle Effects */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Cursor Glow Effect */
+#cursorGlow {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255, 107, 157, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 3;
+    display: none;
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.4), inset 0 0 20px rgba(255, 107, 157, 0.2);
+    transition: display 0.3s ease;
+}
+
+#cursorGlow.active {
+    display: block;
+}
+
+/* Floating Elements Container */
+.floating-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.floating-element {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.7;
+    animation: float-up 8s ease-in infinite;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Stars Background Animation */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ==================== COUNTDOWN SECTION ==================== */
+.countdown-section {
+    text-align: center;
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.romantic-header {
+    margin-bottom: 50px;
+}
+
+.romantic-header h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 50%, #ffc0cb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 107, 157, 0.3);
+    margin-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #ffb3d9;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+/* Countdown Display */
+.countdown-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.countdown-value {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #ff6b9d;
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+    line-height: 1;
+    font-family: 'Courier New', monospace;
+    min-width: 120px;
+    background: rgba(255, 107, 157, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 107, 157, 0.3);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.countdown-label {
+    font-size: 0.9rem;
+    color: #ffb3d9;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.countdown-separator {
+    font-size: 3rem;
+    color: #ff6b9d;
+    font-weight: bold;
+}
+
+/* Message Box */
+.message-box {
+    margin-top: 50px;
+    padding: 30px;
+    background: rgba(255, 107, 157, 0.1);
+    border: 2px solid rgba(255, 107, 157, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+#countdownMessage {
+    font-size: 1.3rem;
+    color: #ffc0cb;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+/* ==================== CELEBRATION SECTION ==================== */
+.celebration-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    animation: celebrationFadeIn 1s ease-out;
+}
+
+@keyframes celebrationFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fireworks-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.firework {
+    position: absolute;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+/* ==================== CELEBRATION SECTION ==================== */
+.celebration-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    animation: celebrationFadeIn 1s ease-out;
+    overflow: hidden;
+}
+
+.celebration-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0e27;
+    z-index: 0;
+}
+
+/* Balloons Container */
+.balloons-container {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 150px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.balloon {
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    border-radius: 50% 50% 50% 0;
+    opacity: 0.85;
+    animation: fallBalloon 6s ease-in forwards;
+}
+
+.balloon::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 2px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-50%);
+}
+
+@keyframes fallBalloon {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(var(--sway, 0)) scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* Fireworks Launcher - Creates particles from bottom */
+.fireworks-launcher {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.firework-particle {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 50%;
+    bottom: 0;
+}
+
+@keyframes celebrationFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.wishes-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    animation: wishFadeIn 1.5s ease-out;
+    width: 90%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes wishFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Birthday Text Styling */
+.birthday-text {
+    text-align: center;
+    animation: textReveal 1s ease-out;
+}
+
+@keyframes textReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rainbow-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.rainbow-text.sub-text {
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.letter {
+    font-size: 4.5rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 
+                 0 0 40px currentColor;
+    animation: letterFloat 2s ease-in-out infinite;
+    display: inline-block;
+    font-family: 'Arial', sans-serif;
+}
+
+.letter:nth-child(1) { animation-delay: 0s; }
+.letter:nth-child(2) { animation-delay: 0.1s; }
+.letter:nth-child(3) { animation-delay: 0.2s; }
+.letter:nth-child(4) { animation-delay: 0.3s; }
+.letter:nth-child(5) { animation-delay: 0.4s; }
+.letter:nth-child(6) { animation-delay: 0.5s; }
+.letter:nth-child(7) { animation-delay: 0.6s; }
+.letter:nth-child(8) { animation-delay: 0.7s; }
+
+@keyframes letterFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Celebration Timer and Skip Button */
+.celebration-timer {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    animation: timerPulse 1s ease-in-out infinite;
+    z-index: 100;
+    pointer-events: none;
+}
+
+#celebrationCountdown {
+    font-size: 2rem;
+    color: #ffd43b;
+    font-weight: 700;
+    text-shadow: 0 0 20px #ffd43b;
+    margin-right: 8px;
+}
+
+@keyframes timerPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(-50%) scale(1.05);
+    }
+}
+
+.skip-button {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #ff6b6b, #ff922b);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    z-index: 100;
+    pointer-events: auto;
+}
+
+.skip-button:hover {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.skip-button:active {
+    transform: translateX(-50%) scale(0.98);
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.wish-message {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: #ffc0cb;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.wish-message p {
+    margin-bottom: 15px;
+    animation: slideInUp 1s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.special-wish {
+    font-weight: 700;
+    font-style: italic;
+    color: #ff6b9d;
+    font-size: 1.4rem !important;
+}
+
+.heart-animation {
+    font-size: 6rem;
+    animation: heartBeat 1.2s ease-in-out infinite;
+    margin: 20px 0;
+    filter: drop-shadow(0 0 15px rgba(255, 107, 157, 0.6));
+}
+
+@keyframes heartBeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.15);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+    75% {
+        transform: scale(1.15);
+    }
+}
+
+/* Floating Hearts Container */
+.floating-hearts-container {
+    position: relative;
+    height: 350px;
+    margin-top: 40px;
+    perspective: 1000px;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 2.5rem;
+    opacity: 0.8;
+    animation: floating-heart-animation 5s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(255, 107, 157, 0.7));
+}
+
+.floating-heart:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-heart:nth-child(2) {
+    left: 25%;
+    animation-delay: 0.8s;
+}
+
+.floating-heart:nth-child(3) {
+    left: 50%;
+    animation-delay: 1.6s;
+}
+
+.floating-heart:nth-child(4) {
+    left: 75%;
+    animation-delay: 2.4s;
+}
+
+.floating-heart:nth-child(5) {
+    left: 90%;
+    animation-delay: 3.2s;
+}
+
+@keyframes floating-heart-animation {
+    0% {
+        transform: translateY(350px) scale(0.3) rotateZ(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.9;
+    }
+    90% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(-50px) scale(1) rotateZ(360deg);
+        opacity: 0;
+    }
+}
+
+/* ==================== LOVELY POPUP ==================== */
+.lovely-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    backdrop-filter: blur(5px);
+    animation: popupFadeIn 0.5s ease-out;
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.popup-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid #ff6b9d;
+    box-shadow: 0 20px 60px rgba(255, 107, 157, 0.4);
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    animation: popupSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popupSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #ff6b9d;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.popup-close:hover {
+    background: rgba(255, 107, 157, 0.2);
+    transform: scale(1.1);
+}
+
+.popup-content h2 {
+    font-size: 2rem;
+    color: #ffb3d9;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+}
+
+.popup-content p {
+    font-size: 1.1rem;
+    color: #ffc0cb;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.popup-timer {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ff6b9d;
+    margin: 30px 0;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+}
+
+.popup-button {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+}
+
+.popup-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
+}
+
+.popup-button:active {
+    transform: translateY(-1px);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .romantic-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .countdown-value {
+        font-size: 2.5rem;
+        min-width: 80px;
+        padding: 15px;
+    }
+
+    .countdown-separator {
+        font-size: 2rem;
+    }
+
+    .birthday-wish h1 {
+        font-size: 2.5rem;
+    }
+
+    .wish-message {
+        font-size: 1.1rem;
+    }
+
+    .popup-content {
+        margin: 20px;
+        padding: 30px;
+    }
+    
+    /* Mobile animation text fixes */
+    .wishes-content span {
+        font-size: 42px !important;
+        letter-spacing: 2px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .romantic-header h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .countdown-value {
+        font-size: 2rem;
+        min-width: 70px;
+    }
+
+    .countdown-separator {
+        font-size: 1.5rem;
+    }
+
+    .countdown-display {
+        gap: 10px;
+    }
+
+    .birthday-wish {
+        padding: 30px 20px;
+    }
+
+    .birthday-wish h1 {
+        font-size: 2rem;
+    }
+
+    .wish-message {
+        font-size: 1rem;
+    }
+
+    .heart-animation {
+        font-size: 3rem;
+    }
+    
+    /* Extra small screen animation text */
+    .wishes-content span {
+        font-size: 32px !important;
+        letter-spacing: 1px !important;
+    }
+}
+
+/* ==================== ULTRA RESPONSIVE DESIGN ==================== */
+
+/* Extra Large Screens (1920px and above) */
+@media (min-width: 1920px) {
+    .romantic-header h1 {
+        font-size: 5rem;
+    }
+
+    .countdown-value {
+        font-size: 5rem;
+        min-width: 150px;
+        padding: 30px;
+    }
+
+    .countdown-label {
+        font-size: 1.2rem;
+    }
+
+    .birthday-wish h1 {
+        font-size: 5rem;
+    }
+
+    .wish-message {
+        font-size: 1.6rem;
+    }
+}
+
+/* Large Screens (1200px to 1919px) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+    .romantic-header h1 {
+        font-size: 4rem;
+    }
+
+    .countdown-value {
+        font-size: 3.5rem;
+        min-width: 130px;
+    }
+
+    .birthday-wish h1 {
+        font-size: 3.5rem;
+    }
+}
+
+/* Tablets (768px to 1199px) */
+@media (min-width: 768px) and (max-width: 1199px) {
+    body {
+        padding: 0 20px;
+    }
+
+    .romantic-header h1 {
+        font-size: 2.8rem;
+        margin-bottom: 30px;
+    }
+
+    .subtitle {
+        font-size: 1.3rem;
+    }
+
+    .countdown-display {
+        gap: 15px;
+    }
+
+    .countdown-value {
+        font-size: 2.8rem;
+        min-width: 100px;
+        padding: 18px;
+    }
+
+    .countdown-label {
+        font-size: 0.85rem;
+        margin-top: 8px;
+    }
+
+    .countdown-separator {
+        font-size: 2.5rem;
+    }
+
+    .message-box {
+        padding: 25px;
+        margin-top: 40px;
+    }
+
+    #countdownMessage {
+        font-size: 1.2rem;
+    }
+
+    .birthday-wish {
+        padding: 40px 30px;
+    }
+
+    .birthday-wish h1 {
+        font-size: 3rem;
+    }
+
+    .wish-message {
+        font-size: 1.25rem;
+        line-height: 1.7;
+    }
+
+    .special-wish {
+        font-size: 1.3rem !important;
+    }
+
+    .heart-animation {
+        font-size: 4rem;
+    }
+
+    .popup-content {
+        max-width: 450px;
+        padding: 35px;
+    }
+
+    .popup-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .popup-timer {
+        font-size: 2.2rem;
+    }
+
+    .popup-button {
+        padding: 12px 35px;
+        font-size: 1rem;
+    }
+}
+
+/* Small Tablets / Large Mobile (600px to 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+    body {
+        padding: 0 15px;
+    }
+
+    .romantic-header h1 {
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .countdown-display {
+        gap: 12px;
+        margin: 35px 0;
+    }
+
+    .countdown-value {
+        font-size: 2rem;
+        min-width: 80px;
+        padding: 15px;
+    }
+
+    .countdown-label {
+        font-size: 0.8rem;
+        margin-top: 6px;
+    }
+
+    .countdown-separator {
+        font-size: 1.8rem;
+    }
+
+    .message-box {
+        padding: 20px;
+        margin-top: 35px;
+        border-radius: 12px;
+    }
+
+    #countdownMessage {
+        font-size: 1.1rem;
+    }
+
+    .birthday-wish {
+        padding: 35px 25px;
+        margin: 20px;
+    }
+
+    .birthday-wish h1 {
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+    }
+
+    .wish-message {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .special-wish {
+        font-size: 1.2rem !important;
+    }
+
+    .heart-animation {
+        font-size: 3.5rem;
+    }
+
+    .floating-hearts-container {
+        height: 250px;
+        margin-top: 25px;
+    }
+
+    .popup-content {
+        max-width: 380px;
+        margin: 20px;
+        padding: 28px;
+    }
+
+    .popup-close {
+        width: 35px;
+        height: 35px;
+        font-size: 1.8rem;
+    }
+
+    .popup-content h2 {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+
+    .popup-content p {
+        font-size: 1rem;
+    }
+
+    .popup-timer {
+        font-size: 2rem;
+        margin: 25px 0;
+    }
+
+    .popup-button {
+        padding: 12px 30px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Medium Mobile (430px to 599px) */
+@media (min-width: 430px) and (max-width: 599px) {
+    body {
+        padding: 0 10px;
+    }
+
+    .romantic-header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .countdown-display {
+        gap: 8px;
+        margin: 30px 0;
+    }
+
+    .countdown-value {
+        font-size: 1.5rem;
+        min-width: 70px;
+        padding: 12px;
+    }
+
+    .countdown-label {
+        font-size: 0.75rem;
+        margin-top: 5px;
+    }
+
+    .countdown-separator {
+        font-size: 1.3rem;
+    }
+
+    .message-box {
+        padding: 18px;
+        margin-top: 30px;
+        border-radius: 10px;
+    }
+
+    #countdownMessage {
+        font-size: 0.95rem;
+    }
+
+    .birthday-wish {
+        padding: 30px 20px;
+        margin: 15px;
+    }
+
+    .birthday-wish h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .wish-message {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .wish-message p {
+        margin-bottom: 12px;
+    }
+
+    .special-wish {
+        font-size: 1.1rem !important;
+    }
+
+    .heart-animation {
+        font-size: 2.8rem;
+    }
+
+    .floating-hearts-container {
+        height: 200px;
+        margin-top: 20px;
+    }
+
+    .floating-heart {
+        font-size: 1.5rem;
+    }
+
+    .popup-content {
+        max-width: 320px;
+        margin: 15px;
+        padding: 25px;
+    }
+
+    .popup-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
+    }
+
+    .popup-content h2 {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+    }
+
+    .popup-content p {
+        font-size: 0.95rem;
+    }
+
+    .popup-timer {
+        font-size: 1.8rem;
+        margin: 20px 0;
+    }
+
+    .popup-button {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Small Mobile (375px to 429px) */
+@media (min-width: 375px) and (max-width: 429px) {
+    body {
+        padding: 0 8px;
+    }
+
+    .romantic-header h1 {
+        font-size: 1.6rem;
+        margin-bottom: 18px;
+        letter-spacing: 1px;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    .countdown-display {
+        gap: 6px;
+        margin: 25px 0;
+    }
+
+    .countdown-value {
+        font-size: 1.3rem;
+        min-width: 60px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .countdown-label {
+        font-size: 0.7rem;
+        margin-top: 4px;
+        letter-spacing: 1px;
+    }
+
+    .countdown-separator {
+        font-size: 1.1rem;
+    }
+
+    .message-box {
+        padding: 16px;
+        margin-top: 25px;
+        border-radius: 10px;
+    }
+
+    #countdownMessage {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .birthday-wish {
+        padding: 25px 15px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+
+    .birthday-wish h1 {
+        font-size: 1.6rem;
+        margin-bottom: 18px;
+    }
+
+    .wish-message {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .wish-message p {
+        margin-bottom: 10px;
+    }
+
+    .special-wish {
+        font-size: 1rem !important;
+    }
+
+    .heart-animation {
+        font-size: 2.5rem;
+    }
+
+    .floating-hearts-container {
+        height: 180px;
+        margin-top: 18px;
+    }
+
+    .floating-heart {
+        font-size: 1.3rem;
+    }
+
+    .popup-content {
+        max-width: 290px;
+        margin: 10px;
+        padding: 22px;
+    }
+
+    .popup-close {
+        width: 30px;
+        height: 30px;
+        font-size: 1.4rem;
+    }
+
+    .popup-content h2 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .popup-content p {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+
+    .popup-timer {
+        font-size: 1.6rem;
+        margin: 18px 0;
+    }
+
+    .popup-button {
+        padding: 9px 22px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Extra Small Mobile (Below 375px) */
+@media (max-width: 374px) {
+    body {
+        padding: 0 5px;
+    }
+
+    .romantic-header h1 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+    }
+
+    .countdown-display {
+        gap: 4px;
+        margin: 20px 0;
+    }
+
+    .countdown-value {
+        font-size: 1.1rem;
+        min-width: 55px;
+        padding: 8px;
+        border-radius: 6px;
+    }
+
+    .countdown-label {
+        font-size: 0.65rem;
+        margin-top: 3px;
+        letter-spacing: 0.5px;
+    }
+
+    .countdown-separator {
+        font-size: 0.95rem;
+    }
+
+    .message-box {
+        padding: 14px;
+        margin-top: 20px;
+        border-radius: 8px;
+    }
+
+    #countdownMessage {
+        font-size: 0.85rem;
+        line-height: 1.3;
+    }
+
+    .birthday-wish {
+        padding: 20px 12px;
+        margin: 8px;
+        border-radius: 12px;
+    }
+
+    .birthday-wish h1 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+    }
+
+    .wish-message {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .wish-message p {
+        margin-bottom: 8px;
+    }
+
+    .special-wish {
+        font-size: 0.95rem !important;
+    }
+
+    .heart-animation {
+        font-size: 2.2rem;
+    }
+
+    .floating-hearts-container {
+        height: 150px;
+        margin-top: 15px;
+    }
+
+    .floating-heart {
+        font-size: 1.1rem;
+    }
+
+    .popup-content {
+        max-width: 260px;
+        margin: 8px;
+        padding: 18px;
+    }
+
+    .popup-close {
+        width: 28px;
+        height: 28px;
+        font-size: 1.2rem;
+        top: 5px;
+        right: 5px;
+    }
+
+    .popup-content h2 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+
+    .popup-content p {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+
+    .popup-timer {
+        font-size: 1.4rem;
+        margin: 15px 0;
+    }
+
+    .popup-button {
+        padding: 8px 18px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ==================== iOS SPECIFIC FIXES ==================== */
+/* Prevent zoom on input focus */
+input, button, select, textarea {
+    font-size: 16px;
+}
+
+/* Fix for iOS scroll behavior */
+body {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Better touch targets for iOS */
+button, a {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* iOS-safe area support */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+    }
+}
+
+/* Smooth scrolling on iOS */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+/* Landscape mode adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+    .romantic-header h1 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+        display: none;
+    }
+
+    .countdown-display {
+        gap: 6px;
+        margin: 15px 0;
+    }
+
+    .countdown-value {
+        font-size: 1.2rem;
+        min-width: 65px;
+        padding: 8px;
+    }
+
+    .countdown-label {
+        font-size: 0.65rem;
+    }
+
+    .message-box {
+        padding: 12px;
+        margin-top: 15px;
+    }
+
+    #countdownMessage {
+        font-size: 0.85rem;
+    }
+
+    .birthday-wish {
+        padding: 25px 20px;
+    }
+
+    .birthday-wish h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .wish-message {
+        font-size: 0.95rem;
+    }
+
+    .heart-animation {
+        font-size: 2rem;
+    }
+
+    .floating-hearts-container {
+        display: none;
+    }
+}
+
+/* ==================== DASHBOARD SECTION ==================== */
+.dashboard-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    z-index: 99;
+    animation: dashboardFadeIn 0.8s ease-out;
+    overflow-y: auto;
+}
+
+@keyframes dashboardFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.dashboard-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-header {
+    text-align: center;
+    padding: 40px 20px 30px;
+    margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 107, 157, 0.3);
+    margin: 0;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Navigation Buttons */
+.dashboard-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin-bottom: 40px;
+    justify-items: center;
+}
+
+.nav-btn {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.2) 0%, rgba(255, 179, 217, 0.1) 100%);
+    border: 2px solid rgba(255, 107, 157, 0.4);
+    border-radius: 15px;
+    padding: 20px;
+    color: #ffb3d9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.2);
+}
+
+.nav-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.3) 0%, rgba(255, 179, 217, 0.2) 100%);
+    border-color: rgba(255, 107, 157, 0.6);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
+}
+
+.nav-btn.active {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+    color: white;
+    border-color: #ff6b9d;
+    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.5);
+}
+
+.nav-icon {
+    font-size: 2rem;
+    display: block;
+}
+
+.nav-label {
+    font-size: 0.95rem;
+    display: block;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    flex: 1;
+    background: rgba(255, 107, 157, 0.08);
+    border: 2px solid rgba(255, 107, 157, 0.3);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 40px rgba(255, 107, 157, 0.2);
+}
+
+.page-content {
+    animation: pageSlideIn 0.5s ease-out;
+}
+
+@keyframes pageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-content h2 {
+    font-size: 2rem;
+    color: #ffb3d9;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+}
+
+.page-content p {
+    font-size: 1.1rem;
+    color: #ffc0cb;
+    line-height: 1.8;
+    margin: 15px 0;
+}
+
+/* Video Gift Styling */
+.video-gift {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid rgba(255, 107, 157, 0.3);
+}
+
+.video-gift h3 {
+    font-size: 1.5rem;
+    color: #ffb3d9;
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px rgba(255, 107, 157, 0.2);
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.video-container video {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(255, 107, 157, 0.3);
+    background: #000;
+}
+
+/* Pictures Gallery Styling */
+.pictures-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(255, 107, 157, 0.05);
+    border-radius: 10px;
+}
+
+.picture-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.picture-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(255, 107, 157, 0.4);
+}
+
+.picture-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+/* ==================== RESPONSIVE DASHBOARD ==================== */
+@media (max-width: 768px) {
+    .celebration-timer {
+        bottom: 110px;
+        font-size: 1rem;
+    }
+
+    #celebrationCountdown {
+        font-size: 1.5rem;
+    }
+
+    .skip-button {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+        bottom: 25px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.8rem;
+        padding: 30px 10px 20px;
+    }
+
+    .dashboard-nav {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+
+    .nav-btn {
+        min-width: 100px;
+        padding: 15px;
+    }
+
+    .nav-icon {
+        font-size: 1.8rem;
+    }
+
+    .nav-label {
+        font-size: 0.85rem;
+    }
+
+    .dashboard-content {
+        padding: 25px;
+    }
+
+    .page-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .page-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-header h1 {
+        font-size: 1.4rem;
+        padding: 20px 5px 15px;
+    }
+
+    .dashboard-nav {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .nav-btn {
+        min-width: 85px;
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .nav-icon {
+        font-size: 1.6rem;
+    }
+
+    .nav-label {
+        font-size: 0.75rem;
+    }
+
+    .dashboard-content {
+        padding: 18px;
+    }
+
+    .page-content h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .page-content p {
+        font-size: 0.95rem;
+    }
+}
+
+/* ==================== RESPONSIVE CELEBRATION PAGE ==================== */
+@media (max-width: 768px) {
+    .letter {
+        font-size: 3rem;
+        letter-spacing: 2px;
+        gap: 6px;
+    }
+
+    .rainbow-text {
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+
+    .balloon {
+        width: 25px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .celebration-timer {
+        bottom: 100px;
+        font-size: 0.9rem;
+    }
+
+    #celebrationCountdown {
+        font-size: 1.3rem;
+    }
+
+    .skip-button {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+        bottom: 20px;
+    }
+
+    .letter {
+        font-size: 2rem;
+        letter-spacing: 1px;
+        gap: 4px;
+    }
+
+    .rainbow-text {
+        gap: 4px;
+        margin-bottom: 8px;
+    }
+
+    .rainbow-text.sub-text {
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .balloon {
+        width: 20px;
+        height: 28px;
+    }
+}
+
+@media (max-width: 374px) {
+    .celebration-timer {
+        bottom: 90px;
+        font-size: 0.8rem;
+    }
+
+    #celebrationCountdown {
+        font-size: 1.1rem;
+    }
+
+    .skip-button {
+        padding: 6px 16px;
+        font-size: 0.75rem;
+        bottom: 15px;
+    }
+
+    .letter {
+        font-size: 1.6rem;
+        letter-spacing: 0.5px;
+    }
+
+    .rainbow-text {
+        gap: 3px;
+        margin-bottom: 6px;
+    }
+
+    .balloon {
+        width: 18px;
+        height: 24px;
+    }
+}
