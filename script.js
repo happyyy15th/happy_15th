@@ -288,13 +288,10 @@ function updateCountdown() {
     
     if (timeRemaining <= 0) {
         // Birthday time reached!
-        if (!celebrationTriggered) {
-            celebrationTriggered = true;
-            document.getElementById('countdownSection').style.display = 'none';
-            document.getElementById('lovelyPopup').style.display = 'none';
-            document.getElementById('celebrationSection').style.display = 'flex';
-            triggerCelebration();
-        }
+        document.getElementById('countdownSection').style.display = 'none';
+        document.getElementById('lovelyPopup').style.display = 'none';
+        document.getElementById('celebrationSection').style.display = 'flex';
+        triggerCelebration();
         return;
     }
     
